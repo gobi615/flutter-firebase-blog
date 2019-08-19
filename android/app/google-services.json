@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "621921899684",
+    "firebase_url": "https://blog-5670a.firebaseio.com",
+    "project_id": "blog-5670a",
+    "storage_bucket": "blog-5670a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:621921899684:android:b14d49818adfa848",
+        "android_client_info": {
+          "package_name": "com.gobi.blog"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "621921899684-95vou4rlodmtqgslpfm26pm49psramft.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHmmultflJJpCjN2DgcNY4MhcuuYWCxcg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "621921899684-95vou4rlodmtqgslpfm26pm49psramft.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
