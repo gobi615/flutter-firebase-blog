@@ -1,10 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 import 'Blog.dart';
 import 'Login.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  debugPaintSizeEnabled = true;
+  runApp(MyApp());
+}
 
 var fs = Firestore.instance ;
 
