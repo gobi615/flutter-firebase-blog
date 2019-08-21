@@ -6,7 +6,7 @@ import 'Blog.dart';
 import 'Login.dart';
 
 void main() {
-  debugPaintSizeEnabled = true;
+//  debugPaintSizeEnabled = true;
   runApp(MyApp());
 }
 
