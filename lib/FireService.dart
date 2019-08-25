@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 
 
-
 class FireService{
   final FirebaseAuth _auth = FirebaseAuth.instance;
   AuthResult authResult;
@@ -13,4 +12,6 @@ class FireService{
     authResult = await _auth.signInWithEmailAndPassword(email: email, password: password);
     return authResult;
   }
+
+
 }

@@ -13,7 +13,9 @@ class Blog extends StatelessWidget {
           stream: fireStore.collection('post').snapshots(),
           builder: (BuildContext context, snapshot) {
             if (!snapshot.hasData)
-              return CircularProgressIndicator();
+              return Center(
+                child : CircularProgressIndicator(),
+                );
             else {
               print('inside else');
               return ListView.builder(

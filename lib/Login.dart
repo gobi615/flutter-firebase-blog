@@ -1,86 +1,88 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'GlobalData.dart';
 
-var fireService = GlobalData.fireService;
-Future<AuthResult> authResult;
+import 'Provider.dart';
 
-class Login extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _LoginState();
-  }
-
-}
-
-class _LoginState extends State<Login> {
-  String email;
-  String password;
-  bool remember;
-
-  bool isCreFails = false;
+class Login extends StatelessWidget {
 
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(title: Text('Login'),),
-      body: Column(
+      body: Container(
+        padding: EdgeInsets.all(10),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            TextField(
-              onChanged: (value) => email = value,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                labelText: 'email'
-              ),
+            StreamBuilder(
+              stream: Provider.of(context).auth.email,
+              initialData: 'email',
+              builder: (context, AsyncSnapshot<String> snapshot){
+                return TextField(
+                  onChanged: Provider.of(context).auth.changeEmail,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                      labelText: 'email',
+                      errorText: snapshot.error
+                  ),
+                );
+              },
             ),
-            TextField(
-              onChanged: (value) => password = value,
-              obscureText: true,
-              decoration: InputDecoration(
-                  labelText: 'password'
-              ),
+            StreamBuilder(
+              stream: Provider.of(context).auth.password,
+              initialData: 'pass',
+              builder: (context,AsyncSnapshot<String> snapshot){
+                return TextField(
+                  onChanged: Provider.of(context).auth.changePassword,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: 'password',
+                    errorText: snapshot.error
+                  ),
+                );
+              },
             ),
             SizedBox(height: 25,),
-            RaisedButton(
-              onPressed: () {
-                print(email);
-                print(password);
-                authResult = fireService.signInWithEmailAndPass(email, password);
-                authResult.then(
-                        (onValue){
-                          print('onValue then ${onValue.user}');
-                          if(onValue.user != null){
-                            Navigator.pushReplacementNamed(context, '/blog');
-                          }
-                        },
-                    onError : (err){
-                          print('onError Executed $err');
-                      setState(() {
-                        isCreFails = true;
-                      });
+            StreamBuilder(
+              stream: Provider.of(context).auth.submitValid,
+              builder: (context,AsyncSnapshot<bool> snapshot){
+                return RaisedButton(
+                  color: Colors.blue,
+                  onPressed: (snapshot.data != null && snapshot.data ) ? (() async {
+                    var auth = Provider.of(context).auth ;
+                    String uid = await auth.submit();
+                    if(uid!=null) {
+                      Navigator.pushReplacementNamed(context, '/blog');
+                      auth.email;
+                      auth.password;
                     }
-
-                    );
+                  }) : null ,
+                  child: Text('Submit'),
+                );
               },
-              child: Text('Submit'),
             ),
             SizedBox(height: 50,),
-            getSignInFailMsg(),
+            StreamBuilder(
+              stream: Provider.of(context).auth.response,
+              builder: (context,AsyncSnapshot snapshot) {
+                if(snapshot.hasData)
+                 return Container(
+                    child: Text('Email and Password is wrong',
+                      style: TextStyle(
+                          color: Colors.redAccent,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.0
+                      ),),
+                  );
+                return Container();
+              }
+            ),
           ],
+        ),
       ),
 
     );
   }
 
-  getSignInFailMsg() {
-  if(isCreFails)
-    return Container(
-      child: Text('Email and Password is wrong',
-        style: TextStyle(
-            color: Colors.redAccent,
-            fontWeight: FontWeight.bold,
-            fontSize: 22.0
-          ),),
-    );
-    return Container();
-  }
+
 }
