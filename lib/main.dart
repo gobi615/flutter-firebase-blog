@@ -27,7 +27,8 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         routes: {'/login' : (BuildContext context)=> Login(),
-          '/blog' : (BuildContext context) => Blog()
+          '/blog' : (BuildContext context) => Blog(),
+          '/article' : (BuildContext context) => Article(),
         },
         home: MyHomePage(),
       ),
