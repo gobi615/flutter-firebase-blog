@@ -7,6 +7,7 @@ import 'Blog.dart';
 import 'Login.dart';
 import 'Provider.dart';
 import 'auth.dart';
+import 'news-by-category.dart';
 
 void main() {
 //  debugPaintSizeEnabled = true;
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         routes: {'/login' : (BuildContext context)=> Login(),
           '/blog' : (BuildContext context) => Blog(),
           '/article' : (BuildContext context) => Article(),
+          '/bycategory' : (BuildContext context) => ByCategory(),
         },
         home: MyHomePage(),
       ),
@@ -69,6 +71,7 @@ class UserProfile extends StatelessWidget{
               }
             },
           ),
+
         ],
       ),
       body: FutureBuilder(
@@ -89,6 +92,13 @@ class UserProfile extends StatelessWidget{
                   color: Colors.lightGreenAccent,
                   onPressed: (){
                     Navigator.pushNamed(context, '/blog');
+                  },
+                ),
+                FlatButton(
+                  child: Text('Click to go by category'),
+                  color: Colors.lightGreenAccent,
+                  onPressed: (){
+                    Navigator.pushNamed(context, '/bycategory');
                   },
                 ),
               ],

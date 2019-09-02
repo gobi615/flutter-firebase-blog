@@ -13,6 +13,7 @@ class Article extends StatelessWidget {
       appBar: AppBar(
         title: Text(post.title),
       ),
+
       body: ListView(
         children: <Widget>[
           Container(
@@ -41,7 +42,7 @@ class Blog extends StatelessWidget {
       ),
       body: StreamBuilder(
           stream: fireStore.collection('post').snapshots(),
-          builder: (BuildContext context, snapshot) {
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (!snapshot.hasData)
               return Center(
                 child: CircularProgressIndicator(),
