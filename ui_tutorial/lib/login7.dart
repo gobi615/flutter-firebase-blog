@@ -5,7 +5,11 @@ class LoginSeven extends StatelessWidget{
 
   Widget build(BuildContext context){
     return Scaffold(
-      body: ListView(
+      body: GestureDetector(
+        onTap: (){
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child : ListView(
           children: <Widget> [
 //            true ? { print('size.height ${MediaQuery.of(context).size.width} ') , Container()} : Container(),
 
@@ -55,18 +59,20 @@ class LoginSeven extends StatelessWidget{
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   SizedBox(height: 30),
-                  TextField(
-                    onChanged: (String value){
-                    },
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(FontAwesomeIcons.envelope),
-                      labelText: 'email',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                    ),
-                  ),
+                 Material(
+                   elevation: 2.0,
+                   borderRadius: BorderRadius.all(Radius.circular(30)),
+                   child:  TextField(
+                     onChanged: (String value){
+                     },
+                     keyboardType: TextInputType.emailAddress,
+                     decoration: InputDecoration(
+                         prefixIcon: Icon(FontAwesomeIcons.envelope),
+                         hintText: 'email',
+                         border: InputBorder.none
+                     ),
+                   ),
+                 ),
                   SizedBox(height: 16),
                   TextField(
                     onChanged: (String value){
@@ -124,7 +130,7 @@ class LoginSeven extends StatelessWidget{
 
 
           ],
-         ),
+         ),),
 
     );
   }
