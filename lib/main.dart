@@ -8,7 +8,7 @@ import 'Login.dart';
 import 'Provider.dart';
 import 'auth.dart';
 import 'news-by-category.dart';
-
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 void main() {
 //  debugPaintSizeEnabled = true;
   runApp(MyApp());
@@ -28,9 +28,11 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         routes: {'/login' : (BuildContext context)=> Login(),
-          '/blog' : (BuildContext context) => Blog(),
+          '/profile' : (BuildContext context) => UserProfile(),
           '/article' : (BuildContext context) => Article(),
-          '/bycategory' : (BuildContext context) => ByCategory(),
+          '/bycategory' : (BuildContext context) => Blog(),
+          '/home' : (BuildContext context) => MyHomePage(),
+
         },
         home: MyHomePage(),
       ),
@@ -65,6 +67,7 @@ class UserProfile extends StatelessWidget{
               try{
                 var auth = Provider.of(context).auth;
                 await auth.signOut();
+
                 print('soignout');
               }catch(e){
                 print(e);
@@ -80,27 +83,60 @@ class UserProfile extends StatelessWidget{
           if(snapshot.hasData)
             return Column(
               children: <Widget>[
-                Center(
-                  heightFactor: 20,
-  //                widthFactor: 50,
-                  child: Container(
-                    child: Text('Welcome ${snapshot.data.email}'),
+                Container(
+                  alignment: Alignment.center,
+                  height: MediaQuery.of(context).size.height * .4,
+                  color: Colors.pinkAccent.shade200,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      CircleAvatar(
+                        child:  Icon(FontAwesomeIcons.user),
+                        radius: 50,
+                        backgroundColor: Colors.blueAccent,
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text( 'Welcome ', style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.teal,
+                            fontWeight: FontWeight.bold
+                          ),),
+                          Text(
+                           '${snapshot.data.email}',
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold
+                            ),),
+                        ],
+                      ),
+
+                    ],
+                  )
+
+
+                ),
+                Container(
+                  alignment: Alignment.center,
+
+                  height: MediaQuery.of(context).size.height*.4,
+                  child: RaisedButton(
+                    child: Text('Go to News'),
+                    color: Colors.blue,
+                    onPressed: (){
+                      Navigator.pushReplacementNamed(context, '/bycategory');
+                    },
+                    shape: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0)
+                    ),
                   ),
                 ),
-                FlatButton(
-                  child: Text('Click to go blog page'),
-                  color: Colors.lightGreenAccent,
-                  onPressed: (){
-                    Navigator.pushNamed(context, '/blog');
-                  },
-                ),
-                FlatButton(
-                  child: Text('Click to go by category'),
-                  color: Colors.lightGreenAccent,
-                  onPressed: (){
-                    Navigator.pushNamed(context, '/bycategory');
-                  },
-                ),
+
+
               ],
             );
           return Container();

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'Post.dart';
 
@@ -36,19 +37,135 @@ class Article extends StatelessWidget {
 
 class Blog extends StatelessWidget {
   Widget build(BuildContext context) {
+    String arg = ModalRoute.of(context).settings.arguments;
+    String category = arg != null ? arg : 'business' ;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Blog'),
+        title: Text(category),
+        actions: <Widget>[
+            FlatButton(
+              child: Text('Profile',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16
+              ),),
+              onPressed: (){
+                Navigator.pushReplacementNamed(context, '/home');
+              },
+            ),
+        ],
       ),
-      body: StreamBuilder(
-          stream: fireStore.collection('post').snapshots(),
-          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (!snapshot.hasData)
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            else {
-              print('inside else');
+      drawer: Drawer(
+        child: Column(
+          children: <Widget>[
+            AppBar(
+              title: Text('Category'),
+              automaticallyImplyLeading: false,
+            ),
+            ListTile(
+              title: Text('Business'),
+              leading: Icon(Icons.business),
+              trailing: Icon(Icons.arrow_forward),
+              onTap: (){
+                Navigator.pushReplacementNamed(context, '/bycategory', arguments: 'business');
+              },
+            ),
+            ListTile(
+              title: Text('Cinema'),
+              leading: Icon(Icons.movie),
+              trailing: Icon(Icons.arrow_forward),
+              onTap: (){
+                Navigator.pushReplacementNamed(context, '/bycategory', arguments: 'cinema');
+              },
+            ),
+            ListTile(
+              title: Text('Environment'),
+              leading: Icon(FontAwesomeIcons.globe),
+              trailing: Icon(Icons.arrow_forward),
+              onTap: (){
+                Navigator.pushReplacementNamed(context, '/bycategory', arguments: 'environment');
+              },
+            ),
+            ListTile(
+              title: Text('LifeStyle'),
+              leading: Icon(FontAwesomeIcons.female),
+              trailing: Icon(Icons.arrow_forward),
+              onTap: (){
+                Navigator.pushReplacementNamed(context, '/bycategory', arguments: 'lifestyle');
+              },
+            ),
+            ListTile(
+              title: Text('Nation'),
+              leading: Icon(FontAwesomeIcons.flag),
+              trailing: Icon(Icons.arrow_forward),
+              onTap: (){
+                Navigator.pushReplacementNamed(context, '/bycategory', arguments: 'nation');
+              },
+            ),
+            ListTile(
+              title: Text('Space'),
+              leading: Icon(FontAwesomeIcons.spaceShuttle),
+              trailing: Icon(Icons.arrow_forward),
+              onTap: (){
+                Navigator.pushReplacementNamed(context, '/bycategory', arguments: 'space');
+              },
+            ),
+            ListTile(
+              title: Text('State'),
+              leading: Icon(Icons.account_balance),
+              trailing: Icon(Icons.arrow_forward),
+              onTap: (){
+                Navigator.pushReplacementNamed(context, '/bycategory', arguments: 'tamilnadu');
+              },
+            ),
+            ListTile(
+              title: Text('Sports'),
+              leading: Icon(FontAwesomeIcons.trophy),
+              trailing: Icon(Icons.arrow_forward),
+              onTap: (){
+                Navigator.pushReplacementNamed(context, '/bycategory', arguments: 'sports');
+              },
+            ),
+            ListTile(
+              title: Text('Tech'),
+              leading: Icon(FontAwesomeIcons.slideshare),
+              trailing: Icon(Icons.arrow_forward),
+              onTap: (){
+                Navigator.pushReplacementNamed(context, '/bycategory', arguments: 'tech');
+              },
+            ),
+            ListTile(
+              title: Text('World'),
+              leading: Icon(FontAwesomeIcons.globeAsia),
+              trailing: Icon(Icons.arrow_forward),
+              onTap: (){
+                Navigator.pushReplacementNamed(context, '/bycategory', arguments: 'world');
+              },
+            ),
+
+          ],
+        ),
+      ),
+      body: NewsByCategory(category),
+    );
+  }
+}
+
+class NewsByCategory extends StatelessWidget{
+
+  String category ;
+  NewsByCategory(this.category);
+
+  @override
+  Widget build(BuildContext context) {
+
+    return StreamBuilder(
+        stream: fireStore.collection('news').document('newsbycategory').collection(category).snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+          if(snapshot.connectionState == ConnectionState.active){
+            if(snapshot.hasData){
+              print(snapshot.data.documents.length);
               return ListView.builder(
                   itemCount: snapshot.data.documents.length,
                   itemBuilder: (context, index) {
@@ -63,7 +180,7 @@ class Blog extends StatelessWidget {
 //                              height: 350,
                               child: Padding(
                                   padding:
-                                      EdgeInsets.only(top: 8.0, bottom: 8.0),
+                                  EdgeInsets.only(top: 8.0, bottom: 8.0),
                                   child: Material(
                                       color: Colors.white,
                                       elevation: 16.0,
@@ -114,8 +231,19 @@ class Blog extends StatelessWidget {
                     );
                   });
             }
-          }),
+            else
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+          }
+          else
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+        },
+
     );
   }
+
 }
 

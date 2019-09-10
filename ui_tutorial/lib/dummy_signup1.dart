@@ -14,7 +14,8 @@ class SignupOnePage extends StatelessWidget {
       child: ListView(
         children: <Widget>[
           SizedBox(height: 30.0,),
-          CircleAvatar(child: Image.asset('assets/img/origami.png'), maxRadius: 50, backgroundColor: Colors.transparent,),
+          CircleAvatar(child: Image.asset('assets/img/origami.png'),
+            maxRadius: 50, backgroundColor: Colors.transparent,),
           SizedBox(height: 20.0,),
           _buildLoginForm(),
           Row(
@@ -65,7 +66,9 @@ class SignupOnePage extends StatelessWidget {
                         ),
                       )
                   ),
-                  Container(child: Divider(color: Colors.blue.shade400,), padding: EdgeInsets.only(left: 20.0,right: 20.0, bottom: 10.0),),
+                  Container(
+                    child: Divider(color: Colors.blue.shade400,),
+                    padding: EdgeInsets.only(left: 20.0,right: 20.0, bottom: 10.0),),
                   Container(
                       padding: EdgeInsets.symmetric(horizontal: 20.0),
                       child: TextField(
@@ -78,7 +81,9 @@ class SignupOnePage extends StatelessWidget {
                         ),
                       )
                   ),
-                  Container(child: Divider(color: Colors.blue.shade400,), padding: EdgeInsets.only(left: 20.0,right: 20.0, bottom: 10.0),),
+                  Container(
+                    child: Divider(color: Colors.blue.shade400),
+                    padding: EdgeInsets.only(left: 20.0,right: 20.0, bottom: 10.0),),
                   Container(
                       padding: EdgeInsets.symmetric(horizontal: 20.0),
                       child: TextField(
@@ -91,7 +96,9 @@ class SignupOnePage extends StatelessWidget {
                         ),
                       )
                   ),
-                  Container(child: Divider(color: Colors.blue.shade400,), padding: EdgeInsets.only(left: 20.0,right: 20.0, bottom: 10.0),),
+                  Container(child: Divider(
+                    color: Colors.blue.shade400,),
+                    padding: EdgeInsets.only(left: 20.0,right: 20.0, bottom: 10.0),),
                   SizedBox(height: 10.0,),
 
                 ],
@@ -110,7 +117,6 @@ class SignupOnePage extends StatelessWidget {
           ),
           Container(
             height: 420,
-
             child: Align(
               alignment: Alignment.bottomCenter,
               child: RaisedButton(
